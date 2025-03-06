@@ -26,14 +26,16 @@ laurea (286) -->
 
 SELECT \*
 FROM courses
-WHERE year = 1 AND period = 'I semestre';
+WHERE year = 1
+AND period = 'I semestre';
 
 <!-- 5. Selezionare tutti gli appelli d'esame che avvengono nel pomeriggio (dopo le 14) del
 20/06/2020 (21) -->
 
 SELECT \*
 FROM exams
-WHERE date = '2020-06-20' AND hour > '14:00:00';
+WHERE date = '2020-06-20'
+AND hour > '14:00:00';
 
 <!-- 6. Selezionare tutti i corsi di laurea magistrale (38) -->
 
@@ -79,3 +81,40 @@ FROM degrees d
 JOIN departments dep ON d.department_id = dep.id
 GROUP BY d.department_id, dep.name
 ORDER BY num_degrees DESC;
+
+<!-- QUERY CON JOIN -->
+<!-- 1. Selezionare tutti gli studenti iscritti al Corso di Laurea in Economia -->
+
+SELECT `students`.`name`,`students`.`surname`,`students`.`id`, `degrees`.`name` AS `name degrees`
+FROM students
+JOIN `degrees` ON `students`.`degree_id` = `degrees`.`id`  
+WHERE `degrees`.`name`= 'Corso di Laurea in Economia';
+
+<!-- 2. Selezionare tutti i Corsi di Laurea Magistrale del Dipartimento di
+Neuroscienze -->
+
+SELECT `degrees`.`name`, `departments`.`name`
+FROM degrees
+JOIN `departments` ON `degrees`.`department_id` = `departments`.`id`  
+WHERE `departments`.`name`= 'Dipartimento di Neuroscienze';
+
+<!-- 3. Selezionare tutti i corsi in cui insegna Fulvio Amato (id=44) -->
+
+SELECT `teachers`.`name`, `teachers`.`surname`, `courses`.`name`
+FROM courses
+JOIN `course_teacher` ON `courses`.`id` = `course_teacher`.`course_id`
+JOIN `teachers` ON `course_teacher`.`teacher_id` = `teachers`.`id`
+WHERE `teachers`.`id`= 44;
+
+<!-- 4. Selezionare tutti gli studenti con i dati relativi al corso di laurea a cui
+sono iscritti e il relativo dipartimento, in ordine alfabetico per cognome e
+nome -->
+
+<!-- 5. Selezionare tutti i corsi di laurea con i relativi corsi e insegnanti -->
+
+<!-- 6. Selezionare tutti i docenti che insegnano nel Dipartimento di
+Matematica (54) -->
+
+<!-- 7. BONUS: Selezionare per ogni studente il numero di tentativi sostenuti
+per ogni esame, stampando anche il voto massimo. Successivamente,
+filtrare i tentativi con voto minimo 18. -->
